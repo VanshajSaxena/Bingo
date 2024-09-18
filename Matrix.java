@@ -8,8 +8,16 @@ import java.util.Scanner;
  * Matrix
  */
 public class Matrix {
-  int[][] matrix;
-  int size;
+  private int[][] matrix;
+  private int size;
+
+  public int[][] getMatrix() {
+    return matrix;
+  }
+
+  public int getSize() {
+    return size * size;
+  }
 
   Matrix() {
     try (Scanner sc = new Scanner(System.in)) {
@@ -22,18 +30,27 @@ public class Matrix {
 
   Matrix(int size) {
     this.matrix = new int[size][size];
+    this.size = size;
   }
 
-  private void printMatrix() {
+  public void printMatrix() {
     for (int i = 0; i < matrix.length; i++) {
       System.out.println();
       for (int j = 0; j < matrix[i].length; j++) {
-        System.out.printf("%02d ", matrix[i][j]);
+        if (matrix[i][j] == -1) {
+          System.out.print("❌ ");
+        } else {
+          System.out.printf("%02d ", matrix[i][j]);
+        }
       }
     }
+    System.out.println();
   }
 
-  private void populateRandomElements() {
+  // The below method uses a list because using a
+  // Set generate and populate random elements was
+  // causing the elements to be populated sequentially.
+  public void populateRandomElements() {
     List<Integer> list = new ArrayList<>();
     int listLength = size * size;
 
@@ -50,11 +67,4 @@ public class Matrix {
     }
   }
 
-  public static void main(String[] args) {
-    Matrix newMatrix = new Matrix();
-
-    newMatrix.populateRandomElements();
-
-    newMatrix.printMatrix();
-  }
 }
