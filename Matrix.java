@@ -47,16 +47,11 @@ public class Matrix {
     System.out.println();
   }
 
-  // The below method uses a list because using a
-  // Set generate and populate random elements was
+  // The below method uses a List because using a
+  // Set to generate and populate random elements was
   // causing the elements to be populated sequentially.
   public void populateRandomElements() {
-    List<Integer> list = new ArrayList<>();
-    int listLength = size * size;
-
-    for (int i = 1; i <= listLength; i++) {
-      list.add(i);
-    }
+    List<Integer> list = getMatrixElementsList();
 
     Collections.shuffle(list);
     Iterator<Integer> iterator = list.iterator();
@@ -65,6 +60,16 @@ public class Matrix {
         matrix[i][j] = iterator.next();
       }
     }
+  }
+
+  public List<Integer> getMatrixElementsList() {
+    List<Integer> list = new ArrayList<>();
+    int listLength = size * size;
+
+    for (int i = 1; i <= listLength; i++) {
+      list.add(i);
+    }
+    return list;
   }
 
 }
