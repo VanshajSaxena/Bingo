@@ -1,19 +1,62 @@
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
+
 /**
  * NewGame
  */
 public class NewGame {
 
+  public static void main(String[] args) {
+
+    NewGame newGame = new NewGame(5);
+
+    while (!newGame.hasWonGame()) {
+    }
+
+  }
+
+  private boolean hasWonGame() {
+    boolean numberOfBingoEqualsFive = false;
+    int numberOfBingos = 0;
+    int numberOfDiagonalBingos;
+    int numberOfVerticalBingos;
+    int numberOfHorizontalBingos;
+
+    checkDiagonalBingos();
+    checkVerticalBingos();
+    checkHorizontalBingos();
+
+    return numberOfBingoEqualsFive;
+  }
+
+  private void checkVerticalBingos() {
+
+  }
+
+  private static void checkDiagonalBingos() {
+
+  }
+
+  private static void checkHorizontalBingos() {
+
+  }
+
   private Matrix matrix;
 
   private int currentMatrixSize;
+
   private int[][] currentMatrix;
+
+  private List<Integer> currentMatrixElementList;
 
   NewGame(int matrixSize) {
     this.matrix = new Matrix(matrixSize);
     this.currentMatrixSize = matrix.getSize();
     this.currentMatrix = matrix.getMatrix();
     this.matrix.populateRandomElements();
-
+    this.currentMatrixElementList = matrix.getMatrixElementsList();
     this.matrix.printMatrix();
   }
 
@@ -21,7 +64,23 @@ public class NewGame {
     matrix.printMatrix();
   }
 
-  public void markANumber(int number) {
+  public void announceANumber() {
+    int computedNumber = computeNumberToBeAnnounced();
+    markANumber(computedNumber);
+    System.out.printf("%02d", computedNumber);
+    System.out.println();
+  }
+
+  public void receiveANumber() {
+    try (Scanner sc = new Scanner(System.in)) {
+      System.out.print("Enter your number: ");
+      int scannedNumber = sc.nextInt();
+
+      markANumber(scannedNumber);
+    }
+  }
+
+  private void markANumber(int number) {
     if (number > currentMatrixSize) {
       throw new IllegalArgumentException("The number provided is beyond the size of the matrix.");
     }
@@ -34,21 +93,9 @@ public class NewGame {
     }
   }
 
-  public void announceANumber() {
-
-  }
-
-  public void receiveANumber() {
-
-  }
-
-  public static void main(String[] args) {
-
-    NewGame newGame = new NewGame(5);
-
-    newGame.markANumber(18);
-
-    newGame.printMatrix();
-
+  private int computeNumberToBeAnnounced() {
+    Collections.shuffle(currentMatrixElementList);
+    Iterator<Integer> iterator = currentMatrixElementList.iterator();
+    return iterator.next();
   }
 }
