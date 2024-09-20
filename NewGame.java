@@ -26,6 +26,8 @@ public class NewGame {
 
   private List<Integer> currentMatrixElementList;
 
+  private Scanner sc = new Scanner(System.in);
+
   NewGame(int matrixSize) {
     this.matrix = new Matrix(matrixSize);
     this.currentMatrixSize = matrix.getSize();
@@ -47,12 +49,10 @@ public class NewGame {
   }
 
   public void receiveANumber() {
-    try (Scanner sc = new Scanner(System.in)) {
-      System.out.print("Enter your number: ");
-      int scannedNumber = sc.nextInt();
+    System.out.print("Enter your number: ");
+    int scannedNumber = sc.nextInt();
 
-      markANumber(scannedNumber);
-    }
+    markANumber(scannedNumber);
   }
 
   private boolean hasWonGame() {
@@ -68,7 +68,7 @@ public class NewGame {
 
     numberOfBingos = numberOfHorizontalBingos + numberOfVerticalBingos + numberOfDiagonalBingos;
 
-    if (numberOfBingos == currentMatrixSize) {
+    if (numberOfBingos == currentMatrix.length) {
       scoredRequiredNoOfBingos = true;
     }
 
@@ -134,12 +134,18 @@ public class NewGame {
     if (number > currentMatrixSize) {
       throw new IllegalArgumentException("The number provided is beyond the size of the matrix.");
     }
+    boolean numberExists = false;
     for (int i = 0; i < currentMatrix.length; i++) {
       for (int j = 0; j < currentMatrix[i].length; j++) {
         if (currentMatrix[i][j] == number) {
           currentMatrix[i][j] = -1;
+          numberExists = true;
         }
       }
+    }
+    if (!numberExists) {
+      System.out.println("Please provide a different number.");
+      throw new IllegalAccessError("The Number is not found in the matrix.");
     }
   }
 
