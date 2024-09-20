@@ -1,14 +1,14 @@
 * TODOs
-** ( ) Add a way to check if the player has won.
-   - ( ) check for Vertical Bingos.
-   - ( ) check for Horizontal Bingos.
-   - ( ) check for Diagonal Bingos.
+** (x) Add a way to check if the player has won.
+   - (x) check for Horizontal Bingos.
+   - (x) check for Vertical Bingos.
+   - (x) check for Diagonal Bingos.
 
 ** ( ) Add a way to intelligently compute a Bingo number to be announced.
-   - (x) Generate a random number.
    - ( ) Use an algorithm to compute the next number to be announced.
+   - (x) Generate a random number.
 
 ** ( ) Create a NewGame algorithm to have multiple games to be played.
    - (x) Create a new game.
-   - (?) [Check if the player has won.]{** Add a way to check if the player has won.}
+   - (x) [Check if the player has won.]{** Add a way to check if the player has won.}
    - ( ) Restart the game if the player wishes.
