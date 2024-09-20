@@ -18,6 +18,43 @@ public class NewGame {
 
   }
 
+  private Matrix matrix;
+
+  private int currentMatrixSize;
+
+  private int[][] currentMatrix;
+
+  private List<Integer> currentMatrixElementList;
+
+  NewGame(int matrixSize) {
+    this.matrix = new Matrix(matrixSize);
+    this.currentMatrixSize = matrix.getSize();
+    this.currentMatrix = matrix.getMatrix();
+    this.matrix.populateRandomElements();
+    this.currentMatrixElementList = matrix.getMatrixElementsList();
+    this.matrix.printMatrix();
+  }
+
+  public void printMatrix() {
+    matrix.printMatrix();
+  }
+
+  public void announceANumber() {
+    int computedNumber = computeNumberToBeAnnounced();
+    markANumber(computedNumber);
+    System.out.printf("%02d", computedNumber);
+    System.out.println();
+  }
+
+  public void receiveANumber() {
+    try (Scanner sc = new Scanner(System.in)) {
+      System.out.print("Enter your number: ");
+      int scannedNumber = sc.nextInt();
+
+      markANumber(scannedNumber);
+    }
+  }
+
   private boolean hasWonGame() {
     boolean scoredRequiredNoOfBingos = false;
     int numberOfBingos = 0;
@@ -91,43 +128,6 @@ public class NewGame {
       diagonalBingos++;
     }
     return diagonalBingos;
-  }
-
-  private Matrix matrix;
-
-  private int currentMatrixSize;
-
-  private int[][] currentMatrix;
-
-  private List<Integer> currentMatrixElementList;
-
-  NewGame(int matrixSize) {
-    this.matrix = new Matrix(matrixSize);
-    this.currentMatrixSize = matrix.getSize();
-    this.currentMatrix = matrix.getMatrix();
-    this.matrix.populateRandomElements();
-    this.currentMatrixElementList = matrix.getMatrixElementsList();
-    this.matrix.printMatrix();
-  }
-
-  public void printMatrix() {
-    matrix.printMatrix();
-  }
-
-  public void announceANumber() {
-    int computedNumber = computeNumberToBeAnnounced();
-    markANumber(computedNumber);
-    System.out.printf("%02d", computedNumber);
-    System.out.println();
-  }
-
-  public void receiveANumber() {
-    try (Scanner sc = new Scanner(System.in)) {
-      System.out.print("Enter your number: ");
-      int scannedNumber = sc.nextInt();
-
-      markANumber(scannedNumber);
-    }
   }
 
   private void markANumber(int number) {
