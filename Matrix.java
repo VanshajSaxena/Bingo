@@ -11,14 +11,6 @@ public class Matrix {
   private int[][] matrix;
   private int size;
 
-  public int[][] getMatrix() {
-    return matrix;
-  }
-
-  public int getSize() {
-    return size * size;
-  }
-
   Matrix() {
     try (Scanner sc = new Scanner(System.in)) {
       System.out.print("Enter the size of your matrix: ");
@@ -31,6 +23,14 @@ public class Matrix {
   Matrix(int size) {
     this.matrix = new int[size][size];
     this.size = size;
+  }
+
+  public int[][] getMatrix() {
+    return matrix;
+  }
+
+  public int getSize() {
+    return size * size;
   }
 
   public void printMatrix() {
