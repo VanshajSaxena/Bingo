@@ -2,6 +2,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -64,12 +65,29 @@ public class NewGame {
     System.out.println();
   }
 
-  // TODO:- Exception handling pending.
   private void receiveANumber() {
-    System.out.print("Enter your number: ");
-    String nextLine = sc.nextLine();
-    int scannedNumber = Integer.parseInt(nextLine);
-    markANumber(scannedNumber);
+    boolean validInput = false;
+    while (!validInput) {
+      System.out.print("Enter your number: ");
+      String input;
+      try {
+        input = sc.nextLine().trim();
+      } catch (NoSuchElementException e) {
+        System.out.println("No more inputs available. Exiting the game.");
+        return;
+      }
+      if (input.isBlank()) {
+        System.out.println("No input provided. Please enter a valid number.");
+        continue;
+      }
+      try {
+        int scannedNumber = Integer.parseInt(input);
+        markANumber(scannedNumber);
+        validInput = true;
+      } catch (NumberFormatException e) {
+        System.out.println("Invalid input. Please enter a valid number.");
+      }
+    }
   }
 
   // TODO:- This is simple and working, but a better approach is required
