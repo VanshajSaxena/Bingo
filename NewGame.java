@@ -15,7 +15,6 @@ public class NewGame {
     NewGame newGame = new NewGame(5);
 
     while (!newGame.hasWonGame()) {
-      newGame.matrix.printMatrix();
       newGame.goOneTurn();
     }
 
@@ -88,6 +87,8 @@ public class NewGame {
       }
       if (scannedNumber > currentMatrixSize || scannedNumber < 1) {
         System.out.println("The number is not available.\nPlease enter a different number.");
+      } else if (!currentMatrixElementList.contains(scannedNumber)) {
+        System.out.println("The number is already marked, can not mark again.\nPlease enter a different number.");
       } else {
         markANumber(scannedNumber);
         validInput = true;
@@ -175,18 +176,14 @@ public class NewGame {
   }
 
   private void markANumber(int number) {
-    boolean numberExists = false;
     for (int i = 0; i < currentMatrix.length; i++) {
       for (int j = 0; j < currentMatrix[i].length; j++) {
         if (currentMatrix[i][j] == number) {
           currentMatrix[i][j] = -1;
-          numberExists = true;
         }
       }
     }
-    if (!numberExists) {
-      System.out.println("Please provide a different number.");
-    }
+    currentMatrixElementList.remove(Integer.valueOf(number));
   }
 
   // TODO:- Requires a better algorithm to be used
@@ -194,7 +191,6 @@ public class NewGame {
     Collections.shuffle(currentMatrixElementList);
     Iterator<Integer> iterator = currentMatrixElementList.iterator();
     int number = iterator.next();
-    currentMatrixElementList.remove(Integer.valueOf(number));
     return number;
   }
 }
