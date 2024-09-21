@@ -80,12 +80,17 @@ public class NewGame {
         System.out.println("No input provided. Please enter a valid number.");
         continue;
       }
+      int scannedNumber = 0;
       try {
-        int scannedNumber = Integer.parseInt(input);
-        markANumber(scannedNumber);
-        validInput = true;
+        scannedNumber = Integer.parseInt(input);
       } catch (NumberFormatException e) {
         System.out.println("Invalid input. Please enter a valid number.");
+      }
+      if (scannedNumber > currentMatrixSize || scannedNumber < 1) {
+        System.out.println("The number is not available.\nPlease enter a different number.");
+      } else {
+        markANumber(scannedNumber);
+        validInput = true;
       }
     }
   }
@@ -169,11 +174,7 @@ public class NewGame {
     return diagonalBingos;
   }
 
-  // TODO:- Requires rework
   private void markANumber(int number) {
-    if (number > currentMatrixSize) {
-      System.out.println("The number provided is beyond the size of the matrix.");
-    }
     boolean numberExists = false;
     for (int i = 0; i < currentMatrix.length; i++) {
       for (int j = 0; j < currentMatrix[i].length; j++) {
