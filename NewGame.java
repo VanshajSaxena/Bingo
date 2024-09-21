@@ -11,11 +11,14 @@ public class NewGame {
 
   public static void main(String[] args) {
 
-    NewGame newGame = new NewGame(5);
+    NewGame newGame = new NewGame();
 
     while (!newGame.hasWonGame()) {
+      newGame.goOneTurn();
     }
 
+    newGame.closeScanner();
+    System.out.println("The game is over.");
   }
 
   private Matrix matrix;
@@ -26,9 +29,10 @@ public class NewGame {
 
   private List<Integer> currentMatrixElementList;
 
-  private Scanner sc = new Scanner(System.in);
+  private Scanner sc;
 
   NewGame(int matrixSize) {
+    sc = new Scanner(System.in);
     this.matrix = new Matrix(matrixSize);
     this.currentMatrixSize = matrix.getSize();
     this.currentMatrix = matrix.getMatrix();
@@ -37,22 +41,51 @@ public class NewGame {
     this.matrix.printMatrix();
   }
 
-  public void printMatrix() {
+  NewGame() {
+    sc = new Scanner(System.in);
+    this.matrix = new Matrix();
+    this.currentMatrixSize = matrix.getSize();
+    this.currentMatrix = matrix.getMatrix();
+    this.matrix.populateRandomElements();
+    this.currentMatrixElementList = matrix.getMatrixElementsList();
+    this.matrix.printMatrix();
+  }
+
+  private void closeScanner() {
+    sc.close();
+  }
+
+  private void printMatrix() {
     matrix.printMatrix();
   }
 
-  public void announceANumber() {
+  private void announceANumber() {
     int computedNumber = computeNumberToBeAnnounced();
     markANumber(computedNumber);
+    System.out.print("\nAnnounced Number: ");
     System.out.printf("%02d", computedNumber);
     System.out.println();
   }
 
-  public void receiveANumber() {
-    System.out.print("Enter your number: ");
-    int scannedNumber = sc.nextInt();
+  private void receiveANumber() {
+    boolean validInput = false;
+    while (!validInput) {
+      System.out.print("Enter your number: ");
+      if (sc.hasNextInt()) {
+        int scannedNumber = sc.nextInt();
+        markANumber(scannedNumber);
+        validInput = true;
+      } else {
+        System.out.println("Invalid Input. Please enter  a valid number.");
+        sc.next();
+      }
+    }
+  }
 
-    markANumber(scannedNumber);
+  private void goOneTurn() {
+    announceANumber();
+    receiveANumber();
+    printMatrix();
   }
 
   private boolean hasWonGame() {
@@ -70,6 +103,7 @@ public class NewGame {
 
     if (numberOfBingos == currentMatrix.length) {
       scoredRequiredNoOfBingos = true;
+      System.out.println("You won the game! Congratulations...");
     }
 
     return scoredRequiredNoOfBingos;
@@ -145,13 +179,14 @@ public class NewGame {
     }
     if (!numberExists) {
       System.out.println("Please provide a different number.");
-      throw new IllegalAccessError("The Number is not found in the matrix.");
     }
   }
 
   private int computeNumberToBeAnnounced() {
     Collections.shuffle(currentMatrixElementList);
     Iterator<Integer> iterator = currentMatrixElementList.iterator();
-    return iterator.next();
+    int number = iterator.next();
+    currentMatrixElementList.remove(Integer.valueOf(number));
+    return number;
   }
 }
