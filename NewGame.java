@@ -11,9 +11,10 @@ public class NewGame {
 
   public static void main(String[] args) {
 
-    NewGame newGame = new NewGame();
+    NewGame newGame = new NewGame(5);
 
     while (!newGame.hasWonGame()) {
+      newGame.matrix.printMatrix();
       newGame.goOneTurn();
     }
 
@@ -29,26 +30,22 @@ public class NewGame {
 
   private List<Integer> currentMatrixElementList;
 
-  private Scanner sc;
+  private Scanner sc = new Scanner(System.in);
 
   NewGame(int matrixSize) {
-    sc = new Scanner(System.in);
     this.matrix = new Matrix(matrixSize);
     this.currentMatrixSize = matrix.getSize();
     this.currentMatrix = matrix.getMatrix();
     this.matrix.populateRandomElements();
     this.currentMatrixElementList = matrix.getMatrixElementsList();
-    this.matrix.printMatrix();
   }
 
   NewGame() {
-    sc = new Scanner(System.in);
     this.matrix = new Matrix();
     this.currentMatrixSize = matrix.getSize();
     this.currentMatrix = matrix.getMatrix();
     this.matrix.populateRandomElements();
     this.currentMatrixElementList = matrix.getMatrixElementsList();
-    this.matrix.printMatrix();
   }
 
   private void closeScanner() {
@@ -67,15 +64,16 @@ public class NewGame {
     System.out.println();
   }
 
+  // TODO:- Exception handling pending.
   private void receiveANumber() {
     System.out.print("Enter your number: ");
-    if (sc.hasNext()) {
-      String nextLine = sc.nextLine();
-      int scannedNumber = Integer.parseInt(nextLine);
-      markANumber(scannedNumber);
-    }
+    String nextLine = sc.nextLine();
+    int scannedNumber = Integer.parseInt(nextLine);
+    markANumber(scannedNumber);
   }
 
+  // TODO:- This is simple and working, but a better approach is required
+  // eventually.
   private void goOneTurn() {
     announceANumber();
     receiveANumber();
@@ -84,14 +82,11 @@ public class NewGame {
 
   private boolean hasWonGame() {
     boolean scoredRequiredNoOfBingos = false;
-    int numberOfBingos = 0;
-    int numberOfHorizontalBingos;
-    int numberOfVerticalBingos;
-    int numberOfDiagonalBingos;
+    int numberOfBingos;
 
-    numberOfHorizontalBingos = checkHorizontalBingos();
-    numberOfVerticalBingos = checkVerticalBingos();
-    numberOfDiagonalBingos = checkDiagonalBingos();
+    int numberOfHorizontalBingos = checkHorizontalBingos();
+    int numberOfVerticalBingos = checkVerticalBingos();
+    int numberOfDiagonalBingos = checkDiagonalBingos();
 
     numberOfBingos = numberOfHorizontalBingos + numberOfVerticalBingos + numberOfDiagonalBingos;
 
@@ -139,11 +134,9 @@ public class NewGame {
     int length = currentMatrix.length;
 
     for (int i = 0; i < length; i++) {
-
       if (currentMatrix[i][i] != -1) {
         mainDiagonalBingo = false;
       }
-
       if (currentMatrix[i][length - i - 1] != -1) {
         antiDiagonalBingo = false;
       }
@@ -158,9 +151,10 @@ public class NewGame {
     return diagonalBingos;
   }
 
+  // TODO:- Requires rework
   private void markANumber(int number) {
     if (number > currentMatrixSize) {
-      throw new IllegalArgumentException("The number provided is beyond the size of the matrix.");
+      System.out.println("The number provided is beyond the size of the matrix.");
     }
     boolean numberExists = false;
     for (int i = 0; i < currentMatrix.length; i++) {
@@ -176,6 +170,7 @@ public class NewGame {
     }
   }
 
+  // TODO:- Requires a better algorithm to be used
   private int computeNumberToBeAnnounced() {
     Collections.shuffle(currentMatrixElementList);
     Iterator<Integer> iterator = currentMatrixElementList.iterator();
