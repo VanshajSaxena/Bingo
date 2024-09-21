@@ -18,6 +18,7 @@ public class NewGame {
       newGame.goOneTurn();
     }
 
+    newGame.printMatrix();
     newGame.closeScanner();
     System.out.println("The game is over.");
   }
@@ -101,7 +102,6 @@ public class NewGame {
   private void goOneTurn() {
     announceANumber();
     receiveANumber();
-    printMatrix();
   }
 
   private boolean hasWonGame() {
@@ -116,7 +116,7 @@ public class NewGame {
 
     if (numberOfBingos == currentMatrix.length) {
       scoredRequiredNoOfBingos = true;
-      System.out.println("You won the game! Congratulations...");
+      System.out.println("Bingo! I think you lost... Try again?");
     }
 
     return scoredRequiredNoOfBingos;
@@ -180,10 +180,11 @@ public class NewGame {
       for (int j = 0; j < currentMatrix[i].length; j++) {
         if (currentMatrix[i][j] == number) {
           currentMatrix[i][j] = -1;
+          currentMatrixElementList.remove(Integer.valueOf(number));
+          return;
         }
       }
     }
-    currentMatrixElementList.remove(Integer.valueOf(number));
   }
 
   // TODO:- Requires a better algorithm to be used
