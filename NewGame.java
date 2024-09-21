@@ -1,6 +1,5 @@
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -15,12 +14,13 @@ public class NewGame {
     NewGame newGame = new NewGame(5);
 
     while (!newGame.hasWonGame()) {
+      newGame.printMatrix();
       newGame.goOneTurn();
     }
 
     newGame.printMatrix();
     newGame.closeScanner();
-    System.out.println("The game is over.");
+    System.out.println("The game is over...");
   }
 
   private Matrix matrix;
@@ -85,9 +85,10 @@ public class NewGame {
         scannedNumber = Integer.parseInt(input);
       } catch (NumberFormatException e) {
         System.out.println("Invalid input. Please enter a valid number.");
+        continue;
       }
-      if (scannedNumber > currentMatrixSize || scannedNumber < 1) {
-        System.out.println("The number is not available.\nPlease enter a different number.");
+      if (scannedNumber < 1 || scannedNumber > currentMatrixSize) {
+        System.out.println("The number is out of range.\nPlease enter a different number.");
       } else if (!currentMatrixElementList.contains(scannedNumber)) {
         System.out.println("The number is already marked, can not mark again.\nPlease enter a different number.");
       } else {
@@ -105,7 +106,6 @@ public class NewGame {
   }
 
   private boolean hasWonGame() {
-    boolean scoredRequiredNoOfBingos = false;
     int numberOfBingos;
 
     int numberOfHorizontalBingos = checkHorizontalBingos();
@@ -114,12 +114,12 @@ public class NewGame {
 
     numberOfBingos = numberOfHorizontalBingos + numberOfVerticalBingos + numberOfDiagonalBingos;
 
-    if (numberOfBingos == currentMatrix.length) {
-      scoredRequiredNoOfBingos = true;
-      System.out.println("Bingo! I think you lost... Try again?");
+    int requiredBingos = currentMatrix.length;
+    if (numberOfBingos >= requiredBingos) {
+      System.out.println("Bingo! I think you lost...");
+      return true;
     }
-
-    return scoredRequiredNoOfBingos;
+    return false;
   }
 
   private int checkHorizontalBingos() {
@@ -190,8 +190,6 @@ public class NewGame {
   // TODO:- Requires a better algorithm to be used
   private int computeNumberToBeAnnounced() {
     Collections.shuffle(currentMatrixElementList);
-    Iterator<Integer> iterator = currentMatrixElementList.iterator();
-    int number = iterator.next();
-    return number;
+    return currentMatrixElementList.get(0);
   }
 }
