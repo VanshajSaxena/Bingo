@@ -10,14 +10,13 @@ import java.util.Scanner;
 public class Matrix {
   private int[][] matrix;
   private int size;
+  private Scanner sc = new Scanner(System.in);
 
   Matrix() {
-    try (Scanner sc = new Scanner(System.in)) {
-      System.out.print("Enter the size of your matrix: ");
-      this.size = sc.nextInt();
+    System.out.print("Enter the size of your matrix: ");
+    this.size = Integer.parseInt(sc.nextLine());
 
-      this.matrix = new int[size][size];
-    }
+    this.matrix = new int[size][size];
   }
 
   Matrix(int size) {

@@ -68,17 +68,11 @@ public class NewGame {
   }
 
   private void receiveANumber() {
-    boolean validInput = false;
-    while (!validInput) {
-      System.out.print("Enter your number: ");
-      if (sc.hasNextInt()) {
-        int scannedNumber = sc.nextInt();
-        markANumber(scannedNumber);
-        validInput = true;
-      } else {
-        System.out.println("Invalid Input. Please enter  a valid number.");
-        sc.next();
-      }
+    System.out.print("Enter your number: ");
+    if (sc.hasNext()) {
+      String nextLine = sc.nextLine();
+      int scannedNumber = Integer.parseInt(nextLine);
+      markANumber(scannedNumber);
     }
   }
 
