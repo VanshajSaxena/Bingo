@@ -14,13 +14,12 @@ public class NewGame {
     NewGame newGame = new NewGame(5);
 
     while (!newGame.hasWonGame()) {
-      newGame.printMatrix();
       newGame.goOneTurn();
     }
 
     newGame.printMatrix();
     newGame.closeScanner();
-    System.out.println("The game is over...");
+    System.out.println("\nThe game is over, try again?");
   }
 
   private Matrix matrix;
@@ -116,7 +115,7 @@ public class NewGame {
 
     int requiredBingos = currentMatrix.length;
     if (numberOfBingos >= requiredBingos) {
-      System.out.println("Bingo! I think you lost...");
+      System.out.println("\nBingo! You lost to me...");
       return true;
     }
     return false;
