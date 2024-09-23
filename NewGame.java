@@ -183,7 +183,7 @@ public class NewGame {
           double score = evaluateNumber(i, j);
           if (score > bestScore) {
             bestScore = score;
-            System.out.print("\nCurrent Best Score: " + bestScore + "\n");
+            System.out.print("\nCurrent Best Score: " + bestScore + " ( " + i + ", " + j + " )" + "\n");
             printMatrix();
             number = currentNumber;
           }
@@ -200,7 +200,12 @@ public class NewGame {
 
     for (int[] line : winnableBingoLinesList) {
       double currentCompleteness = getCurrentCompleteness(line);
-      score += Math.pow(currentCompleteness, 2.5);
+      if (currentCompleteness == currentMatrix.length - 1) {
+        score += Math.pow(currentCompleteness, 2.5);
+        System.out.println("completeness bonus triggered");
+      } else {
+        score += Math.pow(currentCompleteness, 2);
+      }
     }
     int lastIndex = currentMatrix.length - 1;
     if (row == 0 && column == 0 || row == 0 && column == lastIndex || row == lastIndex && column == 0
