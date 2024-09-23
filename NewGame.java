@@ -213,7 +213,7 @@ public class NewGame {
 
   private double evaluateNumber(int row, int column) {
     double score = 1;
-    ArrayList<int[]> winnableBingoLinesList = getWinnableBingoLines();
+    ArrayList<int[]> winnableBingoLinesList = getWinnableBingoLines(row, column);
 
     for (int[] line : winnableBingoLinesList) {
       double currentCompleteness = getCurrentCompleteness(line);
@@ -241,28 +241,41 @@ public class NewGame {
     return countOfAnnouncedNumbers;
   }
 
-  private ArrayList<int[]> getWinnableBingoLines() {
+  private ArrayList<int[]> getWinnableBingoLines(int row, int column) {
     ArrayList<int[]> winnableBingoLinesList = new ArrayList<>();
+
+    if (row == column) {
+      int[] mainDiagonalWinnableLines = new int[currentMatrix.length];
+      for (int i = 0; i < currentMatrix.length; i++) {
+        mainDiagonalWinnableLines[i] = currentMatrix[i][i];
+      }
+      winnableBingoLinesList.add(mainDiagonalWinnableLines);
+    }
+
+    if (row + column == currentMatrix.length - 1) {
+      int[] antiDiagonalWinnableLines = new int[currentMatrix.length];
+      for (int i = 0; i < currentMatrix.length; i++) {
+        antiDiagonalWinnableLines[i] = currentMatrix[i][currentMatrix.length - i - 1];
+      }
+      winnableBingoLinesList.add(antiDiagonalWinnableLines);
+    }
+
     for (int i = 0; i < currentMatrix.length; i++) {
-      winnableBingoLinesList.add(currentMatrix[i]);
+      if (i == row) {
+        winnableBingoLinesList.add(currentMatrix[i]);
+      }
     }
 
     for (int j = 0; j < currentMatrix[0].length; j++) {
-      int[] verticalWinnableLines = new int[currentMatrix.length];
-      for (int i = 0; i < currentMatrix.length; i++) {
-        verticalWinnableLines[i] = currentMatrix[i][j];
+      if (j == column) {
+        int[] verticalWinnableLines = new int[currentMatrix.length];
+        for (int i = 0; i < currentMatrix.length; i++) {
+          verticalWinnableLines[i] = currentMatrix[i][j];
+        }
+        winnableBingoLinesList.add(verticalWinnableLines);
       }
-      winnableBingoLinesList.add(verticalWinnableLines);
     }
 
-    int[] mainDiagonalWinnableLines = new int[currentMatrix.length];
-    int[] antiDiagonalWinnableLines = new int[currentMatrix.length];
-    for (int i = 0; i < currentMatrix.length; i++) {
-      mainDiagonalWinnableLines[i] = currentMatrix[i][i];
-      antiDiagonalWinnableLines[i] = currentMatrix[i][currentMatrix.length - i - 1];
-    }
-    winnableBingoLinesList.add(mainDiagonalWinnableLines);
-    winnableBingoLinesList.add(antiDiagonalWinnableLines);
     return winnableBingoLinesList;
   }
 }
