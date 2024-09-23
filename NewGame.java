@@ -1,5 +1,5 @@
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -57,7 +57,9 @@ public class NewGame {
   }
 
   private void announceANumber() {
-    int computedNumber = computeNumberToBeAnnounced();
+    // TODO:- add a check to see if getNumberToBeAnnounced returns 0, if yes do not
+    // proceed.
+    int computedNumber = getNumberToBeAnnounced();
     markANumber(computedNumber);
     System.out.print("\nAnnounced Number: ");
     System.out.printf("%02d", computedNumber);
@@ -101,6 +103,7 @@ public class NewGame {
   // eventually.
   private void goOneTurn() {
     announceANumber();
+    printMatrix();
     receiveANumber();
   }
 
@@ -186,9 +189,80 @@ public class NewGame {
     }
   }
 
-  // TODO:- Requires a better algorithm to be used
-  private int computeNumberToBeAnnounced() {
-    Collections.shuffle(currentMatrixElementList);
-    return currentMatrixElementList.get(0);
+  private int getNumberToBeAnnounced() {
+    int number = 0;
+    double bestScore = -1;
+
+    for (int i = 0; i < currentMatrix.length; i++) {
+      for (int j = 0; j < currentMatrix[i].length; j++) {
+        int currentNumber = currentMatrix[i][j];
+        if (currentNumber != -1) {
+          double score = evaluateNumber(i, j);
+          if (score > bestScore) {
+            bestScore = score;
+            System.out.print("\nCurrent Best Score: " + bestScore + "\n");
+            System.out.println("\nLast Number Marked: " + currentNumber);
+            printMatrix();
+            number = currentNumber;
+          }
+        }
+      }
+    }
+    return number;
+  }
+
+  private double evaluateNumber(int row, int column) {
+    double score = 1;
+    ArrayList<int[]> winnableBingoLinesList = getWinnableBingoLines();
+
+    for (int[] line : winnableBingoLinesList) {
+      double currentCompleteness = getCurrentCompleteness(line);
+      score += Math.pow(currentCompleteness, 2);
+    }
+    int lastIndex = currentMatrix.length - 1;
+    if (row == 0 && column == 0 || row == 0 && column == lastIndex || row == lastIndex && column == 0
+        || row == lastIndex && column == lastIndex) {
+      score *= 1.2; // Bonus for corners
+      System.out.println("bonus for corners triggered");
+    }
+    if (lastIndex % 2 == 0) {
+      if (row == lastIndex / 2 && column == lastIndex / 2) {
+        score *= 1.3; // Larger bonus for center (in odd-sized matrices)
+        System.out.println("bonus for center triggered");
+      }
+    }
+    return score;
+  }
+
+  private double getCurrentCompleteness(int[] arr) {
+    int[] numberOfAnnouncedNumbers = Arrays.stream(arr).filter(element -> element == -1).toArray();
+    int countOfAnnouncedNumbers = numberOfAnnouncedNumbers.length;
+    System.out.println("countOfAnnouncedNumbers: " + countOfAnnouncedNumbers);
+    return countOfAnnouncedNumbers;
+  }
+
+  private ArrayList<int[]> getWinnableBingoLines() {
+    ArrayList<int[]> winnableBingoLinesList = new ArrayList<>();
+    for (int i = 0; i < currentMatrix.length; i++) {
+      winnableBingoLinesList.add(currentMatrix[i]);
+    }
+
+    for (int j = 0; j < currentMatrix[0].length; j++) {
+      int[] verticalWinnableLines = new int[currentMatrix.length];
+      for (int i = 0; i < currentMatrix.length; i++) {
+        verticalWinnableLines[i] = currentMatrix[i][j];
+      }
+      winnableBingoLinesList.add(verticalWinnableLines);
+    }
+
+    int[] mainDiagonalWinnableLines = new int[currentMatrix.length];
+    int[] antiDiagonalWinnableLines = new int[currentMatrix.length];
+    for (int i = 0; i < currentMatrix.length; i++) {
+      mainDiagonalWinnableLines[i] = currentMatrix[i][i];
+      antiDiagonalWinnableLines[i] = currentMatrix[i][currentMatrix.length - i - 1];
+    }
+    winnableBingoLinesList.add(mainDiagonalWinnableLines);
+    winnableBingoLinesList.add(antiDiagonalWinnableLines);
+    return winnableBingoLinesList;
   }
 }
