@@ -85,7 +85,6 @@ public class NewGame {
   void goOneTurn() {
     receiveANumber();
     announceANumber();
-    printMatrix();
   }
 
   boolean hasWonGame() {
@@ -186,7 +185,6 @@ public class NewGame {
         }
       }
     }
-    System.out.println("\nLast Number Marked: " + number);
     return number;
   }
 
@@ -198,7 +196,6 @@ public class NewGame {
       double currentCompleteness = getCurrentCompleteness(line);
       if (currentCompleteness == currentMatrix.length - 1) {
         score += Math.pow(currentCompleteness, 2.5);
-        System.out.println("completeness bonus triggered");
       } else {
         score += Math.pow(currentCompleteness, 2);
       }
