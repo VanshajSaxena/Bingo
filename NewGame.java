@@ -83,8 +83,9 @@ public class NewGame {
   // TODO:- This is simple and working, but a better approach is required
   // eventually.
   void goOneTurn() {
-    announceANumber();
     receiveANumber();
+    announceANumber();
+    printMatrix();
   }
 
   boolean hasWonGame() {
@@ -185,6 +186,7 @@ public class NewGame {
         }
       }
     }
+    System.out.println("\nLast Number Marked: " + number);
     return number;
   }
 
@@ -194,7 +196,7 @@ public class NewGame {
 
     for (int[] line : winnableBingoLinesList) {
       double currentCompleteness = getCurrentCompleteness(line);
-      score += Math.pow(currentCompleteness, 2);
+      score += Math.pow(currentCompleteness, 2.5);
     }
     int lastIndex = currentMatrix.length - 1;
     if (row == 0 && column == 0 || row == 0 && column == lastIndex || row == lastIndex && column == 0
