@@ -12,8 +12,28 @@ public class Bingo {
     boolean input = false;
     do {
       System.out.println("What size of the matrix you want to play with?");
-      System.out.print("Enter Size: ");
-      int size = scanner.nextInt();
+      boolean isValidSize = false;
+      int size = 0;
+      while (!isValidSize) {
+        String stringSize;
+        System.out.print("Enter Size: ");
+        try {
+          stringSize = scanner.next().trim();
+        } catch (NoSuchFieldError e) {
+          return;
+        }
+        if (stringSize.isBlank()) {
+          System.out.println("No input provided. Please enter a valid number.");
+          continue;
+        }
+        try {
+          size = Integer.valueOf(stringSize);
+          isValidSize = true;
+        } catch (NumberFormatException e) {
+          System.out.println("Invalid input. Please enter a valid number.");
+          continue;
+        }
+      }
       NewGame newGame = new NewGame(size);
 
       while (!newGame.hasWonGame()) {
@@ -25,7 +45,7 @@ public class Bingo {
       System.out.print("Type y/n: ");
       char charInput;
       try {
-        charInput = scanner.next().charAt(0);
+        charInput = scanner.next().toLowerCase().charAt(0);
       } catch (NoSuchElementException e) {
         return;
       }
@@ -34,6 +54,5 @@ public class Bingo {
         scanner.close();
       }
     } while (!input);
-
   }
 }
