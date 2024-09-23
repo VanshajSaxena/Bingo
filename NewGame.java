@@ -57,8 +57,6 @@ public class NewGame {
   }
 
   private void announceANumber() {
-    // TODO:- add a check to see if getNumberToBeAnnounced returns 0, if yes do not
-    // proceed.
     int computedNumber = getNumberToBeAnnounced();
     markANumber(computedNumber);
     System.out.print("\nAnnounced Number: ");
@@ -99,11 +97,8 @@ public class NewGame {
     }
   }
 
-  // TODO:- This is simple and working, but a better approach is required
-  // eventually.
   private void goOneTurn() {
     announceANumber();
-    printMatrix();
     receiveANumber();
   }
 
@@ -200,9 +195,6 @@ public class NewGame {
           double score = evaluateNumber(i, j);
           if (score > bestScore) {
             bestScore = score;
-            System.out.print("\nCurrent Best Score: " + bestScore + "\n");
-            System.out.println("\nLast Number Marked: " + currentNumber);
-            printMatrix();
             number = currentNumber;
           }
         }
@@ -223,12 +215,10 @@ public class NewGame {
     if (row == 0 && column == 0 || row == 0 && column == lastIndex || row == lastIndex && column == 0
         || row == lastIndex && column == lastIndex) {
       score *= 1.2; // Bonus for corners
-      System.out.println("bonus for corners triggered");
     }
     if (lastIndex % 2 == 0) {
       if (row == lastIndex / 2 && column == lastIndex / 2) {
         score *= 1.3; // Larger bonus for center (in odd-sized matrices)
-        System.out.println("bonus for center triggered");
       }
     }
     return score;
@@ -237,7 +227,6 @@ public class NewGame {
   private double getCurrentCompleteness(int[] arr) {
     int[] numberOfAnnouncedNumbers = Arrays.stream(arr).filter(element -> element == -1).toArray();
     int countOfAnnouncedNumbers = numberOfAnnouncedNumbers.length;
-    System.out.println("countOfAnnouncedNumbers: " + countOfAnnouncedNumbers);
     return countOfAnnouncedNumbers;
   }
 
