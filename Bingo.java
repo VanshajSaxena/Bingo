@@ -27,11 +27,9 @@ public class Bingo {
       try {
         charInput = scanner.next().charAt(0);
       } catch (NoSuchElementException e) {
-        System.out.println("Error");
         return;
       }
       if (charInput != 'y') {
-        System.out.println("\nNew Game");
         input = true;
         scanner.close();
       }

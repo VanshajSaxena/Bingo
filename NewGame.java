@@ -85,9 +85,9 @@ public class NewGame {
   // TODO:- This is simple and working, but a better approach is required
   // eventually.
   void goOneTurn() {
+    receiveANumber();
     announceANumber();
     printMatrix();
-    receiveANumber();
   }
 
   boolean hasWonGame() {
@@ -184,13 +184,13 @@ public class NewGame {
           if (score > bestScore) {
             bestScore = score;
             System.out.print("\nCurrent Best Score: " + bestScore + "\n");
-            System.out.println("\nLast Number Marked: " + currentNumber);
             printMatrix();
             number = currentNumber;
           }
         }
       }
     }
+    System.out.println("\nLast Number Marked: " + number);
     return number;
   }
 
@@ -200,7 +200,7 @@ public class NewGame {
 
     for (int[] line : winnableBingoLinesList) {
       double currentCompleteness = getCurrentCompleteness(line);
-      score += Math.pow(currentCompleteness, 2);
+      score += Math.pow(currentCompleteness, 2.5);
     }
     int lastIndex = currentMatrix.length - 1;
     if (row == 0 && column == 0 || row == 0 && column == lastIndex || row == lastIndex && column == 0
@@ -220,7 +220,7 @@ public class NewGame {
   private double getCurrentCompleteness(int[] arr) {
     int[] numberOfAnnouncedNumbers = Arrays.stream(arr).filter(element -> element == -1).toArray();
     int countOfAnnouncedNumbers = numberOfAnnouncedNumbers.length;
-    System.out.println("countOfAnnouncedNumbers: " + countOfAnnouncedNumbers);
+    // System.out.println("countOfAnnouncedNumbers: " + countOfAnnouncedNumbers);
     return countOfAnnouncedNumbers;
   }
 
