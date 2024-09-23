@@ -11,7 +11,7 @@ public class Bingo {
     Scanner scanner = new Scanner(System.in);
     boolean input = false;
     do {
-      System.out.println("What is of the matrix you want to play with?");
+      System.out.println("What size of the matrix you want to play with?");
       System.out.print("Enter Size: ");
       int size = scanner.nextInt();
       NewGame newGame = new NewGame(size);
