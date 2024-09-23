@@ -4,8 +4,8 @@
    - (x) check for Vertical Bingos.
    - (x) check for Diagonal Bingos.
 
-** ( ) Add a way to intelligently compute a Bingo number to be announced.
-   - ( ) Use an algorithm to compute the next number to be announced.
+** (x) Add a way to intelligently compute a Bingo number to be announced.
+   - (x) Use an algorithm to compute the next number to be announced.
    - (x) Generate a random number.
 
 ** ( ) Create a NewGame algorithm to have multiple games to be played.
