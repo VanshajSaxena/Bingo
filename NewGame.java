@@ -9,19 +9,6 @@ import java.util.Scanner;
  */
 public class NewGame {
 
-  public static void main(String[] args) {
-
-    NewGame newGame = new NewGame(5);
-
-    while (!newGame.hasWonGame()) {
-      newGame.goOneTurn();
-    }
-
-    newGame.printMatrix();
-    newGame.closeScanner();
-    System.out.println("\nThe game is over, try again?");
-  }
-
   private Matrix matrix;
 
   private int currentMatrixSize;
@@ -48,11 +35,7 @@ public class NewGame {
     this.currentMatrixElementList = matrix.getMatrixElementsList();
   }
 
-  private void closeScanner() {
-    sc.close();
-  }
-
-  private void printMatrix() {
+  void printMatrix() {
     matrix.printMatrix();
   }
 
@@ -97,12 +80,14 @@ public class NewGame {
     }
   }
 
-  private void goOneTurn() {
+  // TODO:- This is simple and working, but a better approach is required
+  // eventually.
+  void goOneTurn() {
     announceANumber();
     receiveANumber();
   }
 
-  private boolean hasWonGame() {
+  boolean hasWonGame() {
     int numberOfBingos;
 
     int numberOfHorizontalBingos = checkHorizontalBingos();
