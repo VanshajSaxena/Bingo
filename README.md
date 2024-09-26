@@ -28,8 +28,8 @@ A simple console-based Bingo game implemented in Java. Players take turns markin
 
 1. **Clone the repository** or download the source code:
    ```bash
-   git clone https://github.com/your-username/BingoGame.git
-   cd BingoGame
+   git clone https://github.com/VanshajSaxena/Bingo.git
+   cd Bingo
    ```
 
 2. **Compile the program**:
@@ -50,11 +50,11 @@ A simple console-based Bingo game implemented in Java. Players take turns markin
      ```
    - Package the program into a JAR file:
      ```bash
-     jar cfm BingoGame.jar manifest.txt -C bin .
+     jar cfm Bingo.jar manifest.txt -C bin .
      ```
    - Run the JAR file:
      ```bash
-     java -jar BingoGame.jar
+     java -jar Bingo.jar
      ```
 
 ## Example Gameplay
