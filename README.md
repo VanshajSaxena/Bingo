@@ -7,7 +7,7 @@ A simple console-based Bingo game implemented in Java. Players take turns markin
 - Play with a customizable matrix size.
 - Interactive gameplay with user inputs.
 - Computer automatically marks numbers and evaluates the game status.
-- Win condition: A complete line of marked numbers (horizontal, vertical, or diagonal).
+- Win condition: n complete line of marked numbers (horizontal, vertical, or diagonal) where n is your matrix length.
   
 ## How to Play
 
